@@ -7,29 +7,33 @@ const Carousel = () => {
   const [index, setIndex] = useState(0);
   const review = reviews[index];
 
-  const handleNext = () => setIndex((index) => index + 1);
-  const handlePrev = () => setIndex((index) => index - 1);
+  const handleNext = () => {
+    if (index === reviews.length - 1) {
+      setIndex(0);
+      return;
+    }
+
+    setIndex((index) => index + 1);
+  };
+  const handlePrev = () => {
+    if (index === 0) {
+      setIndex(reviews.length - 1);
+      return;
+    }
+    setIndex((index) => index - 1);
+  };
+
   const handleGetRandom = () =>
     setIndex(Math.floor(Math.random() * reviews.length));
-
-  console.log(index);
 
   return (
     <div className="mx-auto w-1/2 p-4 ring-2 ring-secondary rounded-xl">
       <Card key={review.id} {...review} />
       <div className="flex gap-8 mx-auto w-1/2 justify-center mt-12">
-        <button
-          className="btn btn-square"
-          onClick={handlePrev}
-          disabled={index < 1}
-        >
+        <button className="btn btn-square" onClick={handlePrev}>
           &lt;
         </button>
-        <button
-          className="btn btn-square btn-outline"
-          onClick={handleNext}
-          disabled={reviews.length - 1 === index}
-        >
+        <button className="btn btn-square btn-outline" onClick={handleNext}>
           &gt;
         </button>
       </div>
